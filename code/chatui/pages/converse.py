@@ -32,7 +32,7 @@ from chatui.utils import compile, database, logger
 from langgraph.graph import END, StateGraph
 
 PATH = "/"
-TITLE = "Agentic RAG: Chat UI"
+TITLE = "Precision Competition GPT"
 OUTPUT_TOKENS = 250
 MAX_DOCS = 5
 
