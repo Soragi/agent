@@ -347,7 +347,7 @@ def build_page(client: chat_client.ChatClient) -> gr.Blocks:
                         gr.Markdown("Upload webpages or PDF files to be stored persistently in the vector database.\n")
                         with gr.Tabs(selected=0) as document_tabs:
                             with gr.TabItem("Webpages", id=0) as url_tab:
-                                url_docs = gr.Textbox(value="https://lilianweng.github.io/posts/2023-06-23-agent/\nhttps://lilianweng.github.io/posts/2023-03-15-prompt-engineering/\nhttps://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+                                url_docs = gr.Textbox(value="https://www.delltechnologies.com/asset/en-us/solutions/business-solutions/briefs-summaries/dell-ai-factory-with-nvidia-ebook.pdf/\nhttps://www.delltechnologies.com/asset/en-au/products/workstations/briefs-summaries/precision-mobile-leave-behind.pdf/\nhttps://www.dell.com/en-us/dt/ai-technologies/index.htm#tab0=0/",
                                                       lines=5, 
                                                       info="Enter a list of URLs, one per line", 
                                                       show_label=False, 
