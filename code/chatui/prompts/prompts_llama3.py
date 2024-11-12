@@ -17,7 +17,7 @@
 
 router_prompt = """
 <|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are an expert at routing a user question to a vectorstore or web search. Use the vectorstore for questions on LLM agents, prompt engineering, and adversarial attacks. You do not need to be stringent with the keywords in the question related to these topics. Otherwise, use web-search. Give a binary choice 'web_search' or 'vectorstore' based on the question. Your response format is non-negotiable: you must return a JSON with a single key 'datasource' and no premable or explanation. 
+You are an expert at routing a user question to the uploaded document database. Always use the vectorstore (uploaded documents) for answering questions. Give a binary choice 'vectorstore' as a JSON with a single key 'datasource' and no preamble or explanation.  
 
 Question to route: {question} 
 
@@ -26,9 +26,8 @@ Question to route: {question}
 
 retrieval_prompt = """
 <|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are a grader assessing relevance of a retrieved document to a user question. If the document contains keywords related to the user question, grade it as relevant. It does not need to be a stringent test. The goal is to filter out erroneous retrievals. \n
-Give a binary score 'yes' or 'no' score to indicate whether the document is relevant to the question. \n
-Your response format is non-negotiable: you must provide the binary score as a JSON with a single key 'score' and no premable or explanation.
+You are a grader assessing the relevance of a retrieved document from the uploaded database to a user question. If the document contains keywords related to the user question, grade it as relevant. It does not need to be a stringent test. The goal is to filter out erroneous retrievals. 
+Give a binary 'yes' or 'no' score to indicate whether the document is relevant to the question. Provide the binary score as a JSON with a single key 'score' and no preamble or explanation.
 
 <|eot_id|><|start_header_id|>user<|end_header_id|>
 Here is the retrieved document: \n {document} \n
@@ -39,7 +38,7 @@ Here is the user question: {question}
 
 generator_prompt = """
 <|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use five sentences maximum and keep the answer concise but helpful. 
+You are an assistant for question-answering tasks. Use the following retrieved context from the uploaded documents to answer the question. If the context doesn't provide the answer, just say that you don't know. Keep your response to three sentences maximum and ensure the answer is concise. After every answer add " - Powered by the Precision Competition GPT "  
 
 <|eot_id|><|start_header_id|>user<|end_header_id|>
 
@@ -53,7 +52,7 @@ Answer:
 
 hallucination_prompt = """
 <|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are a grader assessing whether an answer is grounded in and supported by a set of facts. Give a binary 'yes' or 'no' score to indicate whether the answer is grounded in and supported by a set of facts. Your response format is non-negotiable: you must provide the binary score as a JSON with a single key 'score' and no preamble or explanation. 
+You are a grader assessing whether an answer is grounded in / supported by facts from the uploaded documents. Give a binary 'yes' or 'no' score to indicate whether the answer is supported by the facts. Provide the binary score as a JSON with a single key 'score' and no preamble or explanation and source name.
 
 <|eot_id|><|start_header_id|>user<|end_header_id|>
 Here are the facts:
@@ -65,7 +64,7 @@ Here is the answer: {generation}
 
 answer_prompt = """
 <|begin_of_text|><|start_header_id|>system<|end_header_id|> 
-You are a grader assessing whether an answer is useful to resolve a question. Give a binary score 'yes' or 'no' to indicate whether the answer is useful to resolve a question. Your response format is non-negotiable: you must provide the binary score as a JSON with a single key 'score' and no preamble or explanation.
+You are a grader assessing whether an answer is useful to resolve a question, based on the retrieved documents. Give a binary 'yes' or 'no' score to indicate whether the answer is useful to resolve the question. Provide the binary score as a JSON with a single key 'score' and no preamble or explanation.
 
 <|eot_id|><|start_header_id|>user<|end_header_id|> 
 Here is the answer:
